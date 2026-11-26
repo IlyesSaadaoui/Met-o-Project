@@ -1,0 +1,316 @@
+/* ============================================================================
+   style.css  —  Ilyes Saadaoui
+   Mobile d'abord : lisible sur 375 px sans scroll horizontal (critère US1).
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --fond: #eef3f8;
+  --carte: #ffffff;
+  --texte: #1c2733;
+  --texte-doux: #5b6b7c;
+  --accent: #1f6fd1;
+  --accent-fonce: #1757a6;
+  --bordure: #d5dee8;
+  --erreur-fond: #fdecec;
+  --erreur-texte: #b42318;
+  --rayon: 12px;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--texte);
+  background: var(--fond);
+  overflow-x: hidden; /* garde-fou : jamais de scroll horizontal */
+}
+
+img {
+  max-width: 100%;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* ---------- En-tête / pied ---------- */
+
+.entete {
+  background: var(--accent);
+  color: #fff;
+  padding: 16px;
+  text-align: center;
+}
+
+.entete__titre {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.pied {
+  margin-top: auto;
+  padding: 16px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--texte-doux);
+}
+
+/* ---------- Mise en page ---------- */
+
+.page {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.carte {
+  background: var(--carte);
+  border-radius: var(--rayon);
+  padding: 20px 16px;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.08);
+}
+
+/* ---------- Recherche (US2) ---------- */
+
+.recherche__form {
+  position: relative;
+}
+
+.recherche__label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.recherche__ligne {
+  display: flex;
+  gap: 8px;
+}
+
+.recherche__champ {
+  flex: 1;
+  min-width: 0; /* évite le débordement du flex sur 375 px */
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid var(--bordure);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.recherche__champ:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+
+.recherche__bouton {
+  flex-shrink: 0;
+  padding: 12px 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent);
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.recherche__bouton:hover,
+.recherche__bouton:focus-visible {
+  background: var(--accent-fonce);
+}
+
+.recherche__suggestions {
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  right: 0;
+  margin: 4px 0 0;
+  padding: 4px 0;
+  list-style: none;
+  background: #fff;
+  border: 1px solid var(--bordure);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(16, 24, 40, 0.12);
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.recherche__suggestion {
+  padding: 10px 12px;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+
+.recherche__suggestion small {
+  color: var(--texte-doux);
+}
+
+.recherche__suggestion:hover,
+.recherche__suggestion[aria-selected="true"] {
+  background: #e7f0fb;
+}
+
+.recherche__suggestion--vide {
+  cursor: default;
+  color: var(--texte-doux);
+}
+
+.recherche__message {
+  margin: 8px 0 0;
+  font-size: 0.9rem;
+  color: var(--texte-doux);
+}
+
+.recherche__message--erreur {
+  color: var(--erreur-texte);
+}
+
+/* ---------- Météo actuelle (US1) ---------- */
+
+.meteo {
+  min-height: 160px;
+  text-align: center;
+}
+
+.meteo__chargement {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 40px 0;
+  color: var(--texte-doux);
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--bordure);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: tourner 0.8s linear infinite;
+}
+
+@keyframes tourner {
+  to { transform: rotate(360deg); }
+}
+
+.meteo__erreur {
+  margin: 0;
+  padding: 16px;
+  border-radius: 8px;
+  background: var(--erreur-fond);
+  color: var(--erreur-texte);
+  font-weight: 600;
+}
+
+.meteo__ville {
+  margin: 0 0 8px;
+  font-size: 1.5rem;
+  overflow-wrap: anywhere;
+}
+
+.meteo__principal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.meteo__icone {
+  width: 80px;
+  height: 80px;
+}
+
+.meteo__temperature {
+  margin: 0;
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+/* ---------- Prévisions (US3, rendu par Taher) ---------- */
+
+.previsions__titre {
+  margin: 0 0 12px;
+  font-size: 1.15rem;
+}
+
+.previsions__liste {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Classes générées par forecast.js (Taher) */
+.previsions-jour {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--bordure);
+}
+
+.previsions-jour:last-child {
+  border-bottom: 0;
+}
+
+.previsions-date {
+  flex: 1;
+  min-width: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.previsions-icone {
+  flex-shrink: 0;
+}
+
+.previsions-icone img {
+  width: 36px;
+  height: 36px;
+}
+
+.previsions-temp {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.previsions-vide {
+  padding: 10px 0;
+  color: var(--texte-doux);
+}
+
+/* ---------- Écrans plus larges ---------- */
+
+@media (min-width: 768px) {
+  .page {
+    padding: 32px 16px;
+  }
+
+  .carte {
+    padding: 28px;
+  }
+
+  .meteo__temperature {
+    font-size: 3.5rem;
+  }
+}
