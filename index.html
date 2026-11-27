@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<!-- ==========================================================================
+     index.html  —  Ilyes Saadaoui
+     US1 : structure de la page d'accueil, responsive 375 px
+     US2 : zone de recherche par ville
+     --------------------------------------------------------------------------
+     Règle d'équipe : un fichier, un responsable.
+     Les ids "meteo-*" sont le CONTRAT avec forecast.js (Taher) : ne pas les
+     renommer sans le prévenir.
+     ========================================================================== -->
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MétéoApp : température actuelle et prévisions sur 5 jours pour n'importe quelle ville.">
+  <title>MétéoApp</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="entete">
+    <h1 class="entete__titre">MétéoApp</h1>
+  </header>
+
+  <main class="page">
+
+    <!-- ===== US2 : recherche par ville (search.js) ===== -->
+    <section class="recherche" aria-label="Recherche d'une ville">
+      <form id="recherche-form" class="recherche__form" autocomplete="off" novalidate>
+        <label for="recherche-champ" class="recherche__label">Rechercher une ville</label>
+        <div class="recherche__ligne">
+          <input
+            id="recherche-champ"
+            class="recherche__champ"
+            type="search"
+            placeholder="Ex. Tunis, Sfax, Paris…"
+            maxlength="100"
+            role="combobox"
+            aria-autocomplete="list"
+            aria-expanded="false"
+            aria-controls="recherche-suggestions">
+          <button type="submit" class="recherche__bouton">Rechercher</button>
+        </div>
+        <ul id="recherche-suggestions" class="recherche__suggestions" role="listbox" hidden></ul>
+        <p id="recherche-message" class="recherche__message" role="status" aria-live="polite" hidden></p>
+      </form>
+    </section>
+
+    <!-- ===== US1 : météo actuelle (affichage : forecast.js) ===== -->
+    <section class="carte meteo" aria-label="Météo actuelle">
+
+      <!-- Indicateur de chargement : affiché pendant l'appel API -->
+      <div id="meteo-chargement" class="meteo__chargement" role="status" aria-live="polite" hidden>
+        <span class="spinner" aria-hidden="true"></span>
+        <span>Chargement de la météo…</span>
+      </div>
+
+      <!-- Message d'erreur : jamais d'écran vide -->
+      <p id="meteo-erreur" class="meteo__erreur" role="alert" hidden></p>
+
+      <!-- Contenu : ville, icône, température -->
+      <div id="meteo-contenu" class="meteo__contenu" hidden>
+        <h2 id="meteo-ville" class="meteo__ville"></h2>
+        <div class="meteo__principal">
+          <img id="meteo-icone" class="meteo__icone" src="" alt="" width="80" height="80" hidden>
+          <p id="meteo-temperature" class="meteo__temperature"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== US3 : prévisions 5 jours (affichage : forecast.js, Taher) =====
+         Ids alignés sur forecast.js : meteo-previsions / meteo-previsions-liste.
+         Masqué au départ : forecast.js l'affiche quand les données arrivent. -->
+    <section id="meteo-previsions" class="carte previsions" aria-label="Prévisions sur 5 jours" hidden>
+      <h2 class="previsions__titre">Prévisions sur 5 jours</h2>
+      <ul id="meteo-previsions-liste" class="previsions__liste"></ul>
+    </section>
+
+  </main>
+
+  <footer class="pied">
+    <p>MétéoApp · Sprint 1</p>
+  </footer>
+
+  <!-- Ordre important : l'API (Ahmed), puis l'affichage (Taher), puis la recherche (Ilyes) -->
+  <script src="api.js"></script>
+  <script src="forecast.js"></script>
+  <script src="search.js"></script>
+</body>
+</html>
